@@ -239,11 +239,14 @@ public class ClientVerificationTests
         var userId = await adminClient.CreateUserAsync(username, "haslo123");
         await adminClient.GrantProjectAccessAsync(projectId, userId);
 
-        // Element tworzy i wydaje KONSTRUKTOR — to on jest created_by.
+        // Element tworzy konstruktor. Wydaje go administrator, bo autor nie może sam ustawić Wydany.
         using var authorClient = factory.CreateClient();
         await authorClient.LoginAsync(username, "haslo123");
         var itemId = await authorClient.CreateNodeAsync(projectId, "Czesc powiadomienia", "part");
-        await ReleaseItemAsync(authorClient, itemId);
+        (await authorClient.PatchAsJsonAsync($"/api/items/{itemId}/status", new { status = "sprawdzany" }))
+            .EnsureSuccessStatusCode();
+        (await adminClient.PatchAsJsonAsync($"/api/items/{itemId}/status", new { status = "wydany" }))
+            .EnsureSuccessStatusCode();
 
         // Wpis dodaje KTOŚ INNY (admin).
         (await AddVerificationAsync(adminClient, projectId, itemId, "do_poprawy")).EnsureSuccessStatusCode();
@@ -273,7 +276,10 @@ public class ClientVerificationTests
         using var authorClient = factory.CreateClient();
         await authorClient.LoginAsync(username, "haslo123");
         var itemId = await authorClient.CreateNodeAsync(projectId, "Czesc w toku", "part");
-        await ReleaseItemAsync(authorClient, itemId);
+        (await authorClient.PatchAsJsonAsync($"/api/items/{itemId}/status", new { status = "sprawdzany" }))
+            .EnsureSuccessStatusCode();
+        (await adminClient.PatchAsJsonAsync($"/api/items/{itemId}/status", new { status = "wydany" }))
+            .EnsureSuccessStatusCode();
 
         (await AddVerificationAsync(adminClient, projectId, itemId, result: null, comment: "wyslane"))
             .EnsureSuccessStatusCode();

@@ -968,6 +968,11 @@ static class ItemEndpoints
             if (!isValidTransition)
                 return Results.BadRequest($"Nie można zmienić statusu z '{currentStatus}' na '{body.Status}'.");
 
+            if (body.Status == "wydany" && user.Role != "admin")
+                return Results.Text(
+                    "Tylko administrator może ustawić status Wydany.",
+                    statusCode: StatusCodes.Status403Forbidden);
+
             // Złożenie z anulowanym elementem w BOM-ie (na dowolnej głębokości, nie tylko
             // bezpośrednie dzieci) nie może zostać wydane — komunikat wskazuje który
             // element trafia bezpośrednio do okna potwierdzenia zmiany statusu na froncie
