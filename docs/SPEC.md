@@ -8,14 +8,14 @@ Build exactly this (`.claude/rules/sparkcad-plan.md`). Each milestone is its own
 | ID | Milestone | Done when |
 |---|---|---|
 | V0 | Repo on the workstation-core template | AGENTS router, DECISIONS, SPEC, rules, STATE, BACKLOG, archives, state-files-gate CI exist; state_lint passes |
-| V1 | Part numbers (V-004, V-005) | Kinds PRT, SUB, ASY, CBL, WIR, MFR, CUS with 4 digits; an API call reserves the next N numbers per kind for the Fusion add-in and records who reserved them; upload refuses a number the vault did not issue or that is already used; tests cover each |
-| V2 | Hand-over package upload (V-003, V-006) | The API accepts the drawing tool's package (hand-over JSON + PDF + DXF + STEP + editable drawing file) for one item and rev; files stored by role; children from the JSON become `item_relations` (part number, qty); unknown child numbers listed, not invented |
+| V1 | Part numbers (V-004, V-005) | Kinds PRT, SUB, ASY, CBL, WIR with 4 digits (V-012: no MFR or CUS items); an API call reserves the next N numbers per kind for the Fusion add-in and records who reserved them; upload refuses a number the vault did not issue or that is already used; tests cover each |
+| V2 | Hand-over package upload (V-003, V-006) | The API accepts the drawing tool's package (hand-over JSON + PDF + DXF + editable drawing file; STEP per D8) for one item and rev; files stored by role; made children from the JSON become `item_relations` (part number, qty); bought and customer children are kept as BOM rows on the assembly, not items (V-012); unknown made-part numbers listed, not invented |
 | V3 | Maker files (V-002, V-007) | Roles `dxf`, `nc`, `gcode`, `slice` (more by config); each bound to item, rev and STEP fingerprint; "Add maker file" in the web app for an item and rev; G-code / .nc get the stamp comment line, DXF the text note; upload against an old rev refused |
 | V4 | Stale and review flags (V-008) | A new STEP fingerprint marks that item's old drawing and maker files stale; every parent gets "review needed"; no automatic rev |
 | V5 | Release check (V-008) | Releasing an assembly fails, with a list, until every custom child down the tree has a drawing and its needed maker files with matching fingerprints |
 | V6 | Contains and where used (V-003) | API and web app show "contains" and "where used", one level and full tree, from `item_relations` |
-| V7 | Drawing check-out and edit (V-006) | Check-out locks the item; the editable drawing file downloads for the drawing tool; check-in stores a new version; rev rules per D5 |
-| V8 | Approvals and PDF stamp | Approval rule per D6; at approval the vault stamps item number, rev and release date on the PDF |
+| V7 | Drawing check-out and edit (V-006) | Check-out locks the item; the editable drawing file downloads for the drawing tool; check-in stores a new version; rev labels per V-010 |
+| V8 | Approvals and PDF stamp | Approval rule per V-011; at approval the vault stamps item number, rev and release date on the PDF |
 
 ## Interfaces
 
@@ -30,12 +30,9 @@ Build exactly this (`.claude/rules/sparkcad-plan.md`). Each milestone is its own
 
 ## Open (Daniel)
 
-- D5 Rev format: a) drawing-tool rules (skip I, L, O, Q; decimals for drawing-only fixes) (rec, model and drawing
-  revs must match) · b) EasyPDM's plain A, B, C
-- D6 Who may approve: a) anyone who did not make the change; admins may approve their own (Daniel's rule; rec)
-  · b) admins only (branch `spark/admin-only-release`)
-- D7 Purchased and customer parts in the vault: a) listed in BOMs, own item with STEP and datasheet, no drawing
-  (rec) · b) BOM rows only, no vault item
+- D8 STEP files in the vault: a) no STEP stored; the vault keeps only its fingerprint, and the editable drawing file
+  carries the 2D view lines so it opens without a STEP (rec) · b) store the STEP with each released rev
+  (3D preview and CNC shops, but a second copy of the model to keep in step)
 
 ## Tolerances and values
 

@@ -1,7 +1,7 @@
 # STATE (max 30 lines, overwrite only)
 Repo: easypdm
 Branch: main
-Last_Verified_SHA: 74c2d43
+Last_Verified_SHA: f72a7d7
 Updated: 2026-11-25 -- Claude (claude.ai chat, sr-drawing-pack coordinator)
 
 ## Current Goal
@@ -10,7 +10,7 @@ Updated: 2026-11-25 -- Claude (claude.ai chat, sr-drawing-pack coordinator)
 
 ## Active Blocker
 - Status: NONE
-- Detail: D5, D6, D7 open (docs/SPEC.md "Open"); they block only V7 and V8. V1 to V6 can start.
+- Detail: D8 open (STEP in the vault, docs/SPEC.md "Open"); it blocks only the STEP part of V2.
 
 ## Next Single Step
 - [NEXT] V1 part numbers on a branch, tests first (`dotnet test EasyPDM.Api.Tests/EasyPDM.Api.Tests.csproj`).
@@ -18,6 +18,6 @@ Updated: 2026-11-25 -- Claude (claude.ai chat, sr-drawing-pack coordinator)
 ## Pointers
 - Branch_States: generated (state_manager.py branches)
 - Backlog: BACKLOG.md
-- Latest_ADR: V-009
-- Kept_Branches: spark/admin-only-release (approval patch, waits on D6)
-- Question_Counter: D7
+- Latest_ADR: V-012
+- Kept_Branches: spark/admin-only-release (superseded by V-011; delete on Daniel's word)
+- Question_Counter: D8
