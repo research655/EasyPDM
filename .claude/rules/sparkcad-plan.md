@@ -1,0 +1,7 @@
+# sparkCAD plan is binding (always on)
+
+- This fork is Spark Robotic's sparkCAD vault. Build what `docs/SPEC.md` and `docs/DECISIONS.md` say, exactly.
+- Do not swap in another design, an upstream EasyPDM behaviour, or an older sparkCAD plan when the SPEC says
+  otherwise. Where the SPEC is silent or a step cannot be done as written, stop and ask Daniel with a question ID;
+  record his answer as an ADR before building on it.
+- An item that conflicts with the SPEC is a question for Daniel, never a silent choice.
