@@ -101,3 +101,32 @@ disagrees, these entries win.
 - Rejected: none yet.
 - Supersedes: none.
 - Reopen if: Daniel answers D5.
+
+## V-010: Rev format follows the drawing tool (2026-11-25, Daniel, D5a)
+- Status: Accepted
+- Context: Model and drawing revs must match; EasyPDM labels revs plain A, B, C.
+- Decision: Rev letters skip I, L, O and Q and continue AA, AB after Z. A drawing-only change that does not affect
+  fit, form or function adds a decimal (C to C.01, C.02); a model change bumps the letter and resets the decimal
+  (sr-drawing-pack ADR-011). The vault labels revs this way.
+- Rejected: EasyPDM's plain A, B, C.
+- Supersedes: V-009 (proposed).
+- Reopen if: none.
+
+## V-011: Who may approve (2026-11-25, Daniel, D6a)
+- Status: Accepted
+- Context: Branch `spark/admin-only-release` lets only admins release; Daniel's rule is broader.
+- Decision: Anyone who did not make the change may approve. System admins and app owners may approve their own.
+- Rejected: admins only (`spark/admin-only-release`).
+- Supersedes: open conflict L of the sparkCAD plan.
+- Reopen if: none.
+
+## V-012: Only controlled files live in the vault (2026-11-25, Daniel, D7)
+- Status: Accepted
+- Context: Bought (off-the-shelf) and customer parts are not made here, so their files cannot be controlled. The
+  live Fusion models stay in the Fusion hub as "living" or "prototype" files.
+- Decision: Vault items exist only for parts, sub-assemblies, assemblies, cables and wires we make. Bought and
+  customer parts get no vault item and no drawing; they appear only as BOM rows of the assemblies that use them,
+  with their maker or customer number. Fusion models are not stored in the vault.
+- Rejected: vault items for bought or customer parts.
+- Supersedes: the MFR and CUS kinds of V-005; open item P of the sparkCAD plan.
+- Reopen if: none.
