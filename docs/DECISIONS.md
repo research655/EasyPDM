@@ -130,3 +130,13 @@ disagrees, these entries win.
 - Rejected: vault items for bought or customer parts.
 - Supersedes: the MFR and CUS kinds of V-005; open item P of the sparkCAD plan.
 - Reopen if: none.
+
+## V-013: The generated STEP is stored with the drawing, for viewing (2026-11-25, Daniel, D8)
+- Status: Accepted
+- Context: "Make drawing" exports a STEP from Fusion to draw the views from.
+- Decision: That STEP is uploaded with the drawing and stored for viewing only (3D preview, reference). It is a
+  snapshot, never the model of record: the live model stays in the Fusion hub (V-012), and every new export
+  replaces the stored STEP of that rev's package. Its sha256 is the fingerprint of V-007.
+- Rejected: no STEP in the vault.
+- Supersedes: none.
+- Reopen if: none.
